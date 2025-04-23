@@ -28,4 +28,8 @@ export class CreateProductDto {
   @MaxLength(4)
   @MinLength(4)
   code: string;
+
+  @IsString()
+  @IsOptional()
+  created_user: string;
 }

@@ -10,7 +10,6 @@ export class ProductsService {
   constructor(@InjectRepository(Product) private productRepository: Repository<Product>) {}
 
   create(createProductDto: CreateProductDto) {
-    console.log(createProductDto);
     const product = this.productRepository.create(createProductDto);
     return this.productRepository.save(product);
   }
