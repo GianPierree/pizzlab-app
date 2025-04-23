@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsMiddleware } from './products/products.middleware';
+import { ProductsController } from './products/products.controller';
 
 @Module({
   imports: [
@@ -23,4 +25,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ProductsModule
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ProductsMiddleware)
+      .forRoutes(ProductsController)
+  }
+}
