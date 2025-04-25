@@ -4,12 +4,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductsMiddleware } from './products/products.middleware';
 import { ProductsController } from './products/products.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ClientsResolver } from './clients/clients.resolver';
-import { ClientsModule } from './clients/clients.module';
+import { OrdersModule } from './orders/orders.module';
+import { OrdersController } from './orders/orders.controller';
+import { AuthMiddleware } from './auth/auth.middleware';
 
 @Module({
   imports: [
@@ -32,14 +32,13 @@ import { ClientsModule } from './clients/clients.module';
     }),
     AuthModule,
     ProductsModule,
-    ClientsModule
+    OrdersModule,
   ],
-  providers: [ClientsResolver],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(ProductsMiddleware)
-      .forRoutes(ProductsController)
+      .apply(AuthMiddleware)
+      .forRoutes(ProductsController, OrdersController)
   }
 }
