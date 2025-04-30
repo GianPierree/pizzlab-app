@@ -1,14 +1,6 @@
-import { 
-  IsDecimal, 
-  IsNotEmpty, 
-  IsOptional, 
-  IsString, 
-  MaxLength, 
-  MinLength 
-} from 'class-validator';
+import { IsDecimal, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateProductDto {
-  
   @IsString()
   @IsNotEmpty()
   @MaxLength(50)

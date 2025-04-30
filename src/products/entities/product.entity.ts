@@ -2,7 +2,6 @@ import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeor
 
 @Entity()
 export class Product {
-  
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

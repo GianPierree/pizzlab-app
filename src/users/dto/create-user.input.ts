@@ -2,7 +2,6 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateUserInput {
-  
   @Field()
   username: string;
 
@@ -20,5 +19,4 @@ export class CreateUserInput {
 
   @Field()
   role: string;
-
 }
