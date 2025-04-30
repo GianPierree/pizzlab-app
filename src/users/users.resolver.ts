@@ -6,9 +6,7 @@ import { CreateUserInput } from './dto/create-user.input';
 
 @Resolver(() => UserModel)
 export class UsersResolver {
-  constructor(
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [UserModel])
   async getUsers(): Promise<User[]> {

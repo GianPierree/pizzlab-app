@@ -1,15 +1,8 @@
 import { Product } from 'src/products/entities/product.entity';
-import { 
-  Column, 
-  DeleteDateColumn, 
-  Entity, 
-  ManyToOne, 
-  PrimaryGeneratedColumn 
-} from 'typeorm';
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Order {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

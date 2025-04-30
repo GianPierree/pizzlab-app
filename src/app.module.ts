@@ -37,8 +37,6 @@ import { AuthMiddleware } from './auth/auth.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes(ProductsController, OrdersController)
+    consumer.apply(AuthMiddleware).forRoutes(ProductsController, OrdersController);
   }
 }
