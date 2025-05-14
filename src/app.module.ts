@@ -10,6 +10,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { OrdersModule } from './orders/orders.module';
 import { OrdersController } from './orders/orders.controller';
 import { AuthMiddleware } from './auth/auth.middleware';
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AuthMiddleware } from './auth/auth.middleware';
     AuthModule,
     ProductsModule,
     OrdersModule,
+    TestModule,
   ],
 })
 export class AppModule {
