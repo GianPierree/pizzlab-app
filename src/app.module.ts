@@ -10,7 +10,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { OrdersModule } from './orders/orders.module';
 import { OrdersController } from './orders/orders.controller';
 import { AuthMiddleware } from './auth/auth.middleware';
-import { TestModule } from './test/test.module';
 import { ConfigModule } from '@nestjs/config';
 import { validationSchema } from './config/validation';
 
@@ -41,11 +40,14 @@ import { validationSchema } from './config/validation';
     AuthModule,
     ProductsModule,
     OrdersModule,
-    TestModule,
   ],
 })
 export class AppModule {
+  constructor(private readonly authMiddleware: AuthMiddleware) {}
+  
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes(ProductsController, OrdersController);
+    consumer
+      .apply(this.authMiddleware.use.bind(this.authMiddleware))
+      .forRoutes(ProductsController, OrdersController);
   }
 }
