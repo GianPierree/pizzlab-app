@@ -10,21 +10,30 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { OrdersModule } from './orders/orders.module';
 import { OrdersController } from './orders/orders.controller';
 import { AuthMiddleware } from './auth/auth.middleware';
-import { TestModule } from './test/test.module';
+import { ConfigModule } from '@nestjs/config';
+import { validationSchema } from './config/validation';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      validationSchema
+    }),
     UsersModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/pizzlab_db'),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'root',
-      password: 'root',
-      database: 'pizzlab_db',
+      host: process.env.PG_HOST,
+      port: +process.env.PG_PORT,
+      username: process.env.PG_USER,
+      password: process.env.PG_PASSWORD,
+      database: process.env.PG_DATABASE,
       autoLoadEntities: true,
-      synchronize: true, //TODO: Solo en desarrollo, en producción no se debe usar
+      synchronize: process.env.NODE_ENV === 'local',
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -34,11 +43,14 @@ import { TestModule } from './test/test.module';
     AuthModule,
     ProductsModule,
     OrdersModule,
-    TestModule,
   ],
 })
 export class AppModule {
+  constructor(private readonly authMiddleware: AuthMiddleware) {}
+
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes(ProductsController, OrdersController);
+    consumer
+      .apply(this.authMiddleware.use.bind(this.authMiddleware))
+      .forRoutes(ProductsController, OrdersController);
   }
 }

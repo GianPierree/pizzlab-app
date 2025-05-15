@@ -21,7 +21,7 @@ export class AuthMiddleware implements NestMiddleware {
       const decoded: { email: string } = this.jwtService.verify(token, {
         secret: jwtConstants.secret,
       });
-      console.log('decoded: ', decoded);
+      
       req['user'] = decoded.email;
     } catch (error) {
       this.logger.error('Error al verificar el token', error);
