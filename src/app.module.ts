@@ -31,6 +31,9 @@ import { validationSchema } from './config/validation';
       database: process.env.PG_DATABASE,
       autoLoadEntities: true,
       synchronize: process.env.NODE_ENV === 'local',
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -44,7 +47,7 @@ import { validationSchema } from './config/validation';
 })
 export class AppModule {
   constructor(private readonly authMiddleware: AuthMiddleware) {}
-  
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(this.authMiddleware.use.bind(this.authMiddleware))

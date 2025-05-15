@@ -4,14 +4,15 @@ import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthMiddleware } from './auth.middleware';
+import { jwtConstants } from './constants/jwt.contants';
 
 @Module({
   imports: [
     UsersModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: process.env.JWT_EXPIRATION,
+        expiresIn: '1h',
       },
     }),
   ],
