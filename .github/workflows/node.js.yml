@@ -16,9 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: 'Iniciando el despliegue'
-      run: echo 'Hola mundo...'
-    - name: 'Fecha y hora'
-      run: date
-    - name: 'Ver contenido del directorio'
-      run: ls -la
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps
+    - name: Execute tests
+      run: npm run test
