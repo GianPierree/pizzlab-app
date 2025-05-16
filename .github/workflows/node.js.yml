@@ -17,3 +17,7 @@ jobs:
     steps:
     - name: 'Iniciando el despliegue'
       run: echo 'Hola mundo...'
+    - name: 'Fecha y hora'
+      run: date
+    - name: 'Ver contenido del directorio'
+      run: ls -la
