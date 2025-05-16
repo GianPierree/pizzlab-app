@@ -31,6 +31,9 @@ import { validationSchema } from './config/validation';
       database: process.env.PG_DATABASE,
       autoLoadEntities: true,
       synchronize: process.env.NODE_ENV === 'local',
+      ssl: {
+        rejectUnauthorized: false,
+      }
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
