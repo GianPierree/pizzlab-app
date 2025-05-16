@@ -24,6 +24,5 @@ export class CreateUserDto {
 
   @IsString()
   @MinLength(3)
-  @IsOptional()
   role: string;
 }
