@@ -46,7 +46,9 @@ import { validationSchema } from './config/validation';
   ],
 })
 export class AppModule {
-  constructor(private readonly authMiddleware: AuthMiddleware) {}
+  constructor(private readonly authMiddleware: AuthMiddleware) {
+    console.log(process.env.NODE_ENV);
+  }
 
   configure(consumer: MiddlewareConsumer) {
     consumer
